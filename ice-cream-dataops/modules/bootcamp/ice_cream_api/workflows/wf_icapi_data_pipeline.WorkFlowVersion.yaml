@@ -23,22 +23,21 @@ workflowDefinition:
     dependsOn:
       - externalId: create_asset_hierarchy_task
   - externalId: icapi_datapoints_extractor_task
-    type: transformation
+    type: function
     parameters:
-      transformation:
+      function:
         externalId: icapi_datapoints_extractor
-        concurrencyPolicy: fail
+        data: { "hours": 1 }
     retries: 3
     timeout: 3600
     onFailure: abortWorkflow
     dependsOn:
       - externalId: contextualize_ts_assets_task
   - externalId: oee_timeseries_task
-    type: transformation
+    type: function
     parameters:
-      transformation:
+      function:
         externalId: oee_timeseries
-        concurrencyPolicy: fail
     retries: 3
     timeout: 3600
     onFailure: abortWorkflow
